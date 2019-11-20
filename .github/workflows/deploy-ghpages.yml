@@ -4,21 +4,20 @@ on: [push]
 
 jobs:
   deploy:
-
+    name: Deploy
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js 8.x
+    - name: Checkout Repo
+      uses: actions/checkout@v1
+    - name: Use Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: 8.x
-    - name: npm install, build, and test
+        node-version: 8
+    - name: yarn install
       run: yarn install 
-      env:
-        CI: true
-    - uses: fregante/setup-git-token@v1
-    - name: Deploy gh-pages
+    - name: Setup github token
+      uses: fregante/setup-git-token@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-    - run: yarn deploy
+    - name: Deploy gh-pages
+      run: yarn deploy

@@ -8,7 +8,7 @@ const App: FC = () => {
   const openQR = () => {
     liff.init({ liffId: process.env.REACT_APP_LIFF_ID as string }).then(() => {
       liff.scanCode()
-        .then(value => alert(value))
+        .then(value => alert(value.toString()))
     })
   }
   return (

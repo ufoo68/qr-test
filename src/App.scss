@@ -1,4 +1,17 @@
 .App {
-  margin-top: 200px;
   text-align: center;
+  margin-top: 100px;
+
+  .qrvalue {
+    font-size: 1.2rem;
+  }
+
+  .loginButton {
+    margin-top: 20px;
+  }
+
+  .qrButton {
+    margin-top: 20px;
+  }
+
 }

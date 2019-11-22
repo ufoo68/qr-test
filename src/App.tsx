@@ -1,19 +1,46 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import './App.scss';
 
 const liff = window.liff
 
 const App: FC = () => {
+  const [value, setValue] = useState<string>('')
+  const [isLogin, setIsLogin] = useState<boolean>(false)
+
+  useEffect(() => {
+    liff.init({ liffId: process.env.REACT_APP_LIFF_ID as string }).then(() => {
+      setIsLogin(liff.isLoggedIn())
+    })
+  }, [])
+
+  const login = () => {
+    liff.init({ liffId: process.env.REACT_APP_LIFF_ID as string }).then(() => {
+      liff.login()
+      setIsLogin(liff.isLoggedIn())
+    })
+  }
+
   const openQR = () => {
     liff.init({ liffId: process.env.REACT_APP_LIFF_ID as string }).then(() => {
       liff.scanCode()
-        .then(value => alert(value.toString()))
+        .then(value => setValue(value.toString()))
     })
   }
+
   return (
     <div className="App">
-      <Button variant="contained" color="primary" onClick={() => openQR()}>Open QR camera</Button>
+      <div className="qrValue">{value}</div>
+      <div className="loginButton">
+        <Button variant="contained" color="primary" onClick={() => login()} disabled={isLogin}>
+          Login
+        </Button>
+      </div>
+      <div className="qrButton">
+        <Button variant="contained" color="secondary" onClick={() => openQR()} disabled={!isLogin}>
+          Open QR camera
+      </Button>
+      </div>
     </div>
   );
 }

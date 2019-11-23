@@ -25,7 +25,7 @@ const App: FC = () => {
     liff.init({ liffId: process.env.REACT_APP_LIFF_ID as string }).then(() => {
       try {
         liff.scanCode()
-          .then(result => setValue(result.toString()))
+          .then(result => setValue(result.value!))
           .catch(() => alert('cannot read QR'))
       } catch {
         alert('cannot open QR camera')
